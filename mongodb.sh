@@ -22,6 +22,7 @@ VALIDATE(){
         echo -e "$2 ... :: $R FAILED $N" | tee -a $LOGS_FILE
     elseif 
         echo -e "$2 ... :: $R SUCCESS $N" | tee -a $LOGS_FILE
+    fi
 }
 
 cp -p ./mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
