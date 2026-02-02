@@ -7,14 +7,14 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-$SCRIPT_DIR=$PWD
+SCRIPT_DIR=$PWD
 MONGODB_HOST=mongodb.daws88-s.online
 
 if [ $USER_ID -ne 0 ]; then
     echo "$R Please run the script with Root user $N" | tee -a $LOGS_FILE
     exit 1
 else
-    echo "$G Running the script with Root user $N" | tee -a $LOGS_FILE
+    echo " $G Running the script with Root user $N " | tee -a $LOGS_FILE
 fi    
 
 mkdir -p $LOGS_FOLDER
@@ -30,15 +30,15 @@ VALIDATE(){
 dnf module disable nodejs -y &>>$LOGS_FILE
 VALIDATE $? "Disabling default Nodejs version"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>$LOGS_FILE
 VALIDATE $? "Enabling Nodejs 20 version"
 
-dnf install nodejs -y
+dnf install nodejs -y &>>$LOGS_FILE
 VALIDATE $? "Installing Nodejs"
 
 id roboshop &>>$LOGS_FILE
 if [ $? -ne 0]; then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>LOGS_FILE
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOGS_FILE
     VALIDATE $? "Creating system user"
 else 
     echo -e "ID Roboshop already exists ... $Y SKIPPING $N"
