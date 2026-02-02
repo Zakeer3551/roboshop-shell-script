@@ -13,8 +13,6 @@ MONGODB_HOST=mongodb.daws88-s.online
 if [ $USER_ID -ne 0 ]; then
     echo "$R Please run the script with Root user $N" | tee -a $LOGS_FILE
     exit 1
-else
-    echo " $G Running the script with Root user $N " | tee -a $LOGS_FILE
 fi    
 
 mkdir -p $LOGS_FOLDER
@@ -37,7 +35,7 @@ dnf install nodejs -y &>>$LOGS_FILE
 VALIDATE $? "Installing Nodejs"
 
 id roboshop &>>$LOGS_FILE
-if [ $? -ne 0]; then
+if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOGS_FILE
     VALIDATE $? "Creating system user"
 else 
@@ -76,8 +74,8 @@ VALIDATE $? "Installing mongodb client"
 
 INDEX=$(mongosh --host $MONGODB_HOST --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 
-if [ $INDEX -ne 0 ]; then
-    mongosh --host $MONGODB_HOST </app/db/master-data.js
+if [ $INDEX -le 0 ]; then
+    mongosh --host $MONGODB_HOST </app/db/master-data.js &>> $LOGS_FILE
     VALIDATE $? "Loading products"
 else
     echo -e "Products already loaded ... $Y SKIPPING $N"
