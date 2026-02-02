@@ -84,6 +84,4 @@ else
 fi
 
 systemctl restart catalogue
-VALIDATE $? "Restarting catalogue
-
-
+VALIDATE $? "Restarting catalogue"
