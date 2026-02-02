@@ -12,7 +12,7 @@ if [ $USER_ID -ne 0 ]; then
     echo "$R Please run the script with Root user $N" | tee -a $LOGS_FILE
     exit 1
 else
-    echo "Running the script with Root user" | tee -a $LOGS_FILE
+    echo "$G Running the script with Root user $N" | tee -a $LOGS_FILE
 fi    
 
 mkdir -p $LOGS_FOLDER
@@ -21,7 +21,7 @@ VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "$2 ... :: $R FAILED $N" | tee -a $LOGS_FILE
     else 
-        echo -e "$2 ... :: $R SUCCESS $N" | tee -a $LOGS_FILE
+        echo -e "$2 ... :: $G SUCCESS $N" | tee -a $LOGS_FILE
     fi
 }
 
