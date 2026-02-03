@@ -10,12 +10,14 @@ N="\e[0m"
 SCRIPT_DIR=$PWD
 MONGODB_HOST=mongodb.daws88-s.online
 
+mkdir -p $LOGS_FOLDER
+
 if [ $USER_ID -ne 0 ]; then
     echo "$R Please run the script with Root user $N" | tee -a $LOGS_FILE
     exit 1
 fi    
 
-mkdir -p $LOGS_FOLDER
+
 
 VALIDATE(){
     if [ $1 -ne 0 ]; then

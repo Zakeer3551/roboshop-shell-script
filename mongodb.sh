@@ -8,6 +8,8 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
+mkdir -p $LOGS_FOLDER
+
 if [ $USER_ID -ne 0 ]; then
     echo "$R Please run the script with Root user $N" | tee -a $LOGS_FILE
     exit 1
@@ -15,7 +17,7 @@ else
     echo "$G Running the script with Root user $N" | tee -a $LOGS_FILE
 fi    
 
-mkdir -p $LOGS_FOLDER
+
 
 VALIDATE(){
     if [ $1 -ne 0 ]; then
