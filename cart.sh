@@ -9,13 +9,13 @@ Y="\e[33m"
 N="\e[0m"
 SCRIPT_DIR=$PWD
 
+mkdir -p $LOGS_FOLDER
 
 if [ $USER_ID -ne 0 ]; then
     echo "$R Please run the script with Root user $N" | tee -a $LOGS_FILE
     exit 1
 fi    
 
-mkdir -p $LOGS_FOLDER
 
 VALIDATE(){
     if [ $1 -ne 0 ]; then
@@ -45,29 +45,29 @@ fi
 mkdir -p /app &>>$LOGS_FILE
 VALIDATE $? "Creating app directory"
 
-curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip &>>$LOGS_FILE
-VALIDATE $? "Downlaoding User application code"
+curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>>$LOGS_FILE
+VALIDATE $? "Downlaoding cart application code"
 cd /app 
 
 rm -rf /app/*
 VALIDATE $? "Removing existing code"
 
-unzip /tmp/user.zip &>>$LOGS_FILE
-VALIDATE $? "Unzipping the user application"
+unzip /tmp/cart.zip &>>$LOGS_FILE
+VALIDATE $? "Unzipping the cart application"
 
 cd /app 
 npm install &>>$LOGS_FILE
 VALIDATE $? "Installing Dependencies"
 
-cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service &>>$LOGS_FILE
+cp $SCRIPT_DIR/cart.service /etc/systemd/system/cart.service &>>$LOGS_FILE
 VALIDATE $? "Copy the systemctl service"
 
 systemctl daemon-reload
 VALIDATE $? "Daemon reload"
 
-systemctl enable user 
-systemctl start user &>>$LOGS_FILE
-VALIDATE $? "Enabling and starting the user"
+systemctl enable cart 
+systemctl start cart &>>$LOGS_FILE
+VALIDATE $? "Enabling and starting the cart"
 
 
 
